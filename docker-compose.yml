@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+  mariadb-auth:
+    build: ./db-auth
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin_password
+    expose:
+      - 3307
+    ports:
+      - "3307:3307"
+    volumes:
+      - ./auth-data:/var/lib/mysql
+      - ./db-auth:/docker-entrypoint-initdb.d
+      - ./db-auth/encryption.cnf:/etc/mysql/conf.d/encryption.cnf
+      - ./db-auth/compress.cnf:/etc/mysql/conf.d/compress.cnf
+      - ./db-auth/keys.enc:/etc/mysql/conf.d/keys.enc
+    networks:
+      backend:
+
+  mariadb-products:
+    build: ./db-products
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: products
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin_password
+    expose:
+      - 3308
+    ports:
+      - "3308:3308"
+    volumes:
+      - ./products-data:/var/lib/mysql
+      - ./db-products:/docker-entrypoint-initdb.d
+      - ./db-products/encryption.cnf:/etc/mysql/conf.d/encryption.cnf
+      - ./db-products/compress.cnf:/etc/mysql/conf.d/compress.cnf
+      - ./db-products/keys.enc:/etc/mysql/conf.d/keys.enc
+    networks:
+      backend:
+
+networks:
+  backend:

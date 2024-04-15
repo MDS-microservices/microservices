@@ -1,1 +1,5 @@
 proto/
+
+# bdd data
+auth-data/
+products-data/

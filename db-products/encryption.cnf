@@ -1,0 +1,7 @@
+[mysqld]
+plugin-load-add=file_key_management
+file-key-management
+file_key_management_encryption_algorithm=aes_cbc
+file_key_management_filename = /etc/mysql/conf.d/keys.enc
+innodb-encrypt-tables = ON
+innodb-encrypt-log

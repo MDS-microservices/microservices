@@ -1,18 +1,41 @@
 version: "3.3"
 
 services:
+  microservices-gateway:
+    build: ./gateway
+    expose:
+      - 50050
+    ports:
+      - "50050:3000"
+    environment:
+      AUTH_URL: http://microservices-auth:50051/ # L'URL de l'authentification
+    networks:
+      backend:
+
+  microservices-auth:
+    build: ./auth
+    expose:
+      - 50051
+    ports:
+      - "50051:50051"
+    depends_on:
+      mariadb-auth:
+        condition: service_started
+    networks:
+      backend:
+
   mariadb-auth:
     build: ./db-auth
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: auth
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_AUTH}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_AUTH}
+      MYSQL_USER: ${MYSQL_USER_AUTH}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD_AUTH}
     expose:
-      - 3307
+      - 50055
     ports:
-      - "3307:3307"
+      - "50055:3306"
     volumes:
       - ./auth-data:/var/lib/mysql
       - ./db-auth:/docker-entrypoint-initdb.d
@@ -26,10 +49,10 @@ services:
     build: ./db-products
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: products
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_PRODUCTS}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_PRODUCTS}
+      MYSQL_USER: ${MYSQL_USER_PRODUCTS}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD_PRODUCTS}
     expose:
       - 3308
     ports:

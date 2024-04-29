@@ -14,7 +14,7 @@ Back :
 
 - [x] Gateway pour faire le lien entre le front et les APIs
 - [x] API pour l'authentification
-- [ ] API liée à l’ajout, la mise à jour, la suppression et l’affichage des produits
+- [x] API liée à l’ajout, la mise à jour, la suppression et l’affichage des produits
 
 Front :
 

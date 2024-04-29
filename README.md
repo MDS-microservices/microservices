@@ -20,3 +20,27 @@ Front :
 
 - [ ] Page accueil avec authentification
 - [ ] Service correspondant à l’API products
+
+## Installation
+
+Il faudra créer un fichier `.env` à la racine du projet contenant les variables suivantes :
+
+```dotenv
+# Auth BDD
+MYSQL_ROOT_PASSWORD_AUTH=
+MYSQL_DATABASE_AUTH=
+MYSQL_USER_AUTH=
+MYSQL_PASSWORD_AUTH=
+
+# Products BDD
+MYSQL_ROOT_PASSWORD_PRODUCTS=
+MYSQL_DATABASE_PRODUCTS=
+MYSQL_USER_PRODUCTS=
+MYSQL_PASSWORD_PRODUCTS=
+```
+
+Pour lancer le conteneur Docker :
+
+```shell
+docker-compose build && docker-compose up -d
+```

@@ -2,7 +2,7 @@
 import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
 import { configure, util } from 'protobufjs';
 import { Observable } from 'rxjs';
-import Long = require('long');
+import Long from "long";
 
 export const protobufPackage: string = 'auth';
 

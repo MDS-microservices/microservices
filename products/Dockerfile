@@ -15,8 +15,12 @@ RUN pnpm install
 # Copiez le reste des fichiers de l'application dans le conteneur
 COPY . .
 
+# Compilez l'application
+RUN pnpm build
+
 # Exposez le port sur lequel votre application NestJS s'exécutera
-EXPOSE 3000
+EXPOSE 50052
 
 # Commande pour démarrer l'application en mode production
-CMD ["pnpm", "run", "start:dev"]
+RUN chmod +x scripts/init.sh
+ENTRYPOINT ["scripts/init.sh"]

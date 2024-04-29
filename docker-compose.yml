@@ -9,6 +9,7 @@ services:
       - "50050:3000"
     environment:
       AUTH_URL: http://microservices-auth:50051/ # L'URL de l'authentification
+      PRODUCTS_URL: http://microservices-products:50052/ # L'URL des produits
     networks:
       backend:
 
@@ -20,6 +21,18 @@ services:
       - "50051:50051"
     depends_on:
       mariadb-auth:
+        condition: service_started
+    networks:
+      backend:
+
+  microservices-products:
+    build: ./products
+    expose:
+      - 50052
+    ports:
+      - "50052:50052"
+    depends_on:
+      mariadb-products:
         condition: service_started
     networks:
       backend:
@@ -54,9 +67,9 @@ services:
       MYSQL_USER: ${MYSQL_USER_PRODUCTS}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD_PRODUCTS}
     expose:
-      - 3308
+      - 50056
     ports:
-      - "3308:3308"
+      - "50056:3307"
     volumes:
       - ./products-data:/var/lib/mysql
       - ./db-products:/docker-entrypoint-initdb.d
